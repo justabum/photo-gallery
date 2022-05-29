@@ -2,6 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { GetSuggestionsRequest } from '../models/get-suggestions-request.model';
+import { GetSuggestionsResponse } from '../models/get-suggestions-response.model';
+import { GuessLetter, GuessType } from '../models/guess-letter.model';
 import { TestHttpRequest } from '../models/test-http-request.model';
 import { TestHttpResponse } from '../models/test-http-response.model';
  
@@ -15,17 +18,72 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
  
+  
   getWords(): Observable<TestHttpResponse> {
-
-    
     console.log('getWords ' + this.baseURL)
-    //return this.http.get<TestHttpResponse[]>(this.baseURL)
+    
     const headerOptions = new HttpHeaders();
     headerOptions.set('Content-Type', 'application/json');
     var request: TestHttpRequest = {StringValue:"Fred", IntValue:69};
  
     return this.http.post<TestHttpResponse>(this.baseURL, request, {headers: headerOptions});
   }
+
+  getWords2(): Observable<TestHttpResponse> {
+    const url = "https://localhost:7209/api/wordle/GetSuggestions";
+    console.log('getWords2 ' + url)
+    
+    const headerOptions = new HttpHeaders();
+    headerOptions.set('Content-Type', 'application/json');
+
+
+    let guess1: GuessLetter[] = [];  
+    guess1.push({type: GuessType.WrongLetter, letter: "P"});
+    guess1.push({type: GuessType.WrongLetter, letter: "T"});
+    guess1.push({type: GuessType.RightPosition, letter: "U"});
+    guess1.push({type: GuessType.WrongLetter, letter: "S"});
+    guess1.push({type: GuessType.WrongPosition, letter: "A"});
+
+    let guess2: GuessLetter[] = [];  
+    guess2.push({type: GuessType.RightPosition, letter: "L"});
+    guess2.push({type: GuessType.WrongLetter, letter: "W"});
+    guess2.push({type: GuessType.RightPosition, letter: "U"});
+    guess2.push({type: GuessType.WrongLetter, letter: "S"});
+    guess2.push({type: GuessType.WrongLetter, letter: "Z"});
+
+    var request: GuessLetter[][] = [];
+    request.push(guess1);
+    request.push(guess2);
+  
+    this.http.post<GetSuggestionsResponse>(url, request, {headers: headerOptions})
+        .subscribe(
+            (response) => {
+              /*
+              var jsonString = JSON.stringify(val);
+              let response: TestHttpResponse = JSON.parse(jsonString);
+
+console.log(response.responseStringValue);
+console.log(response.responseIntValue);
+console.log(response.errorCode);
+console.log(response.errorDescription);
+console.log(response.suggestions);
+var test = response.suggestions[2];
+
+                
+*/
+console.log("POST GetSuggestions call successful value returned in body", 
+                response);
+            },
+            errorResponse => {
+                console.log("GetSuggestions POST call in error", errorResponse);
+            },
+            () => {
+                console.log("GetSuggestions POST observable is now completed.");
+            });
+ 
+    return this.http.post<TestHttpResponse>(this.baseURL, request, {headers: headerOptions});
+  }
+
  /*
   addPerson(person:Person): Observable<any> {
     const headers = { 'content-type': 'application/json'}  

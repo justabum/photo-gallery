@@ -27,5 +27,13 @@ export class Tab1Page {
   addGuess(event) {
     //debugger;
     this.refreshWords();
+    console.log(this.guess);
+  }
+  addGuess2(event) {
+    this.apiService.getWords2()
+      .subscribe(data => {
+        console.log(data)
+        this.words=data.suggestions;
+      })  
   }
 }
