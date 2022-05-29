@@ -13,5 +13,27 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div>
+    <div>
+      <label>Name: </label>
+      <input [(ngModel)]="guess" />
+    </div>
+    <div>
+      <!--<button (click)="addGuess()">Add</button>-->
+      <ion-button (click)="addGuess($event)">Add Guesst</ion-button>
+    </div>
+  </div>
+   
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Suggestion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let word of words;">
+        <td>{{word}}</td>
+      </tr>
+    </tbody>
+  </table>
 </ion-content>

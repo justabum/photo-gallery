@@ -6,6 +6,7 @@ import { Storage } from '@capacitor/storage';
 import { Platform } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { TestHttpResponse } from '../models/test-http-response.model';
+import { TestHttpRequest } from '../models/test-http-request.model';
 
 
 
@@ -73,9 +74,10 @@ export class PhotoService {
 // https://localhost:7209/api/wordle
 //const url = "https://localhost:7209/api/wordle"; // local
 const url = "https://wordlehelperapi20220527105945.azurewebsites.net/api/Wordle"; // azure
-let request = new TestHttpRequest({StringValue:"Fred", IntValue:69});
+//let request = new TestHttpRequest({StringValue:"Fred", IntValue:69});
 //this.http.get<Person[]>(this.baseURL + 'people') 
     const headerOptions = new HttpHeaders();
+    var request: TestHttpRequest = {StringValue:"Fred", IntValue:69};
 
     headerOptions.set('Content-Type', 'application/json');
 
@@ -203,7 +205,7 @@ export interface UserPhoto {
   filepath: string;
   webviewPath: string;
 }
-
+/*
 export class TestHttpRequest {
   public StringValue:string = "default"
   public IntValue:number = 0;
@@ -212,3 +214,4 @@ export class TestHttpRequest {
         Object.assign(this, init);
     }
 }
+*/
