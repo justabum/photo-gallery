@@ -4,6 +4,7 @@
       Tab 3
     </ion-title>
   </ion-toolbar>
+ 
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -12,6 +13,43 @@
       <ion-title size="large">Tab 3</ion-title>
     </ion-toolbar>
   </ion-header>
+<!--
+  <div>
+    <ion-button  color="wrongletter" (click)="changeState1($event)">L</ion-button>
+    <ion-button  color="wrongposition" (click)="changeState1($event)">A</ion-button>
+    <ion-button color="rightposition" (click)="changeState1($event)">U</ion-button>
+    <ion-button color="wrongletter" (click)="changeState1($event)">G</ion-button>
+    <ion-button  color="wrongletter" (click)="changeState1($event)">H</ion-button>
+  </div>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-grid class="ion-no-padding">
+    <ion-row *ngFor="let word of words; index as row;">
+    <ion-col class="ion-no-padding"  *ngFor="let letter of words[row]; index as column"> 
+      <ion-button  color="{{letter.color}}" (click)="changeState(letter, row, column)">{{letter.letter}}</ion-button>
+    </ion-col>
+    </ion-row>
+  </ion-grid>
+-->
+<div>
+  <input [(ngModel)]="guess" />
+  <ion-button  (click)="addGuess()">Add Guess</ion-button>
+</div>
+  <table>
+    <tr *ngFor="let word of uiGuesses; index as row;"><td *ngFor="let letter of uiGuesses[row]; index as column"><ion-button  color="{{letter.color}}" (click)="changeState(row, column)">{{letter.letter}}</ion-button></td><td> <ion-fab-button (click)="deleteWord(row)" size="small" color="danger" style="width:20px; height:20px">X</ion-fab-button></td></tr>
+  </table>
+  <div>
+    <ion-button  (click)="getSuggestions()">Get Suggestions</ion-button>
+  </div>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>{{suggestions.length}} Suggestions:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let suggestion of suggestions;">
+        <td>{{suggestion}}</td>
+      </tr>
+    </tbody>
+  </table>
 </ion-content>
