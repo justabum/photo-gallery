@@ -29,8 +29,9 @@ export class ApiService {
     return this.http.post<TestHttpResponse>(this.baseURL, request, {headers: headerOptions});
   }
 
-  getWords2(): Observable<TestHttpResponse> {
-    const url = "https://localhost:7209/api/wordle/GetSuggestions";
+  getWords2(): Observable<GetSuggestionsResponse> {
+    const url = "https://wordlehelperapi20220527105945.azurewebsites.net/api/wordle/GetSuggestions";
+    //const url = "https://localhost:7209/api/wordle/GetSuggestions";
     console.log('getWords2 ' + url)
     
     const headerOptions = new HttpHeaders();
@@ -51,26 +52,16 @@ export class ApiService {
     guess2.push({type: GuessType.WrongLetter, letter: "S"});
     guess2.push({type: GuessType.WrongLetter, letter: "Z"});
 
-    var request: GuessLetter[][] = [];
-    request.push(guess1);
-    request.push(guess2);
-  
+    var guesses: GuessLetter[][] = [];
+    guesses.push(guess1);
+    guesses.push(guess2);
+
+    var request: GetSuggestionsRequest = { Guesses: guesses };
+  /*
     this.http.post<GetSuggestionsResponse>(url, request, {headers: headerOptions})
         .subscribe(
             (response) => {
-              /*
-              var jsonString = JSON.stringify(val);
-              let response: TestHttpResponse = JSON.parse(jsonString);
 
-console.log(response.responseStringValue);
-console.log(response.responseIntValue);
-console.log(response.errorCode);
-console.log(response.errorDescription);
-console.log(response.suggestions);
-var test = response.suggestions[2];
-
-                
-*/
 console.log("POST GetSuggestions call successful value returned in body", 
                 response);
             },
@@ -80,8 +71,8 @@ console.log("POST GetSuggestions call successful value returned in body",
             () => {
                 console.log("GetSuggestions POST observable is now completed.");
             });
- 
-    return this.http.post<TestHttpResponse>(this.baseURL, request, {headers: headerOptions});
+ */
+    return this.http.post<GetSuggestionsResponse>(url, request, {headers: headerOptions});
   }
 
  /*

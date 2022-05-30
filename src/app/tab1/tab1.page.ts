@@ -33,6 +33,7 @@ export class Tab1Page {
     this.apiService.getWords2()
       .subscribe(data => {
         console.log(data)
+        
         this.words=data.suggestions;
       })  
   }
