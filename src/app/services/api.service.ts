@@ -56,7 +56,7 @@ export class ApiService {
     guesses.push(guess1);
     guesses.push(guess2);
 
-    var request: GetSuggestionsRequest = { Guesses: guesses };
+    var request: GetSuggestionsRequest = { Guesses: guesses, ReturnQuery: false };
   /*
     this.http.post<GetSuggestionsResponse>(url, request, {headers: headerOptions})
         .subscribe(
